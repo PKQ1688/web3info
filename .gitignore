@@ -2,4 +2,5 @@
 .shuttle-storage
 Secrets*.toml
 Cargo.lock
-.vscode
+.env
+poetry.lock
