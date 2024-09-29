@@ -1,9 +1,8 @@
 import json
 from pathlib import Path
 
-from transformers.agents import ReactCodeAgent
-
 from src.llm_engines import OpenAIEngine
+from transformers.agents import ReactCodeAgent
 
 if Path("output.csv").exists():
     Path("output.csv").unlink()
@@ -42,12 +41,16 @@ Some children travelled only with a nanny, therefore parch=0 for them.
 agent_prompt = """
 You are an expert data analyst.
 Please load the source file and analyze its content.
-According to the variables you have, begin by listing 3 interesting questions that could be asked on this data, for instance about specific correlations with survival rate.
+According to the variables you have, begin by listing 3 interesting questions that could be asked on this data,
+for instance about specific correlations with survival rate.
 Then answer these questions one by one, by finding the relevant numbers.
-Meanwhile, plot some figures using matplotlib/seaborn and save them to the (already existing) folder './figures/': take care to clear each figure with plt.clf() before doing another plot.
+Meanwhile, plot some figures using matplotlib/seaborn and save them to the (already existing) folder './figures/':
+take care to clear each figure with plt.clf() before doing another plot.
 
 In your final answer: summarize these correlations and trends
-After each number derive real worlds insights, for instance: "Correlation between is_december and boredness is 1.3453, which suggest people are more bored in winter".
+After each number derive real worlds insights,
+for instance: "Correlation between is_december and boredness is 1.3453,
+which suggest people are more bored in winter".
 Your final answer should have at least 3 numbered and detailed parts.
 """
 

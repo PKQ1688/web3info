@@ -1,9 +1,13 @@
+[tool.isort]
+color_output = true
+profile = "black"
+
 [tool.poetry]
-name = "web3info"
-version = "0.1.0"
-description = ""
 authors = ["adolf <adolf1321794021@gmail.com>"]
+description = ""
+name = "web3info"
 readme = "README.md"
+version = "0.1.0"
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -17,81 +21,42 @@ pygments = "^2.18.0"
 markdownify = "^0.13.1"
 duckduckgo-search = "^6.2.13"
 
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.pytest.ini_options]
+addopts = "-l -s --durations=0"
+log_cli = true
+log_cli_level = "info"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+log_format = "%(asctime)s %(levelname)s %(message)s"
+minversion = "6.0"
 
 [tool.ruff]
-# https://github.com/astral-sh/ruff
-# https://docs.astral.sh/ruff/settings
-output-format = "grouped"
-show-fixes = true
-target-version = "py312"
-
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 120
-skip-magic-trailing-comma = true
+fix = true
+line-length = 120
 
 [tool.ruff.lint]
-select = [  # UPDATEME with additional rules from https://docs.astral.sh/ruff/rules/
-  "F",
-  "E",
-  "W",
-  "I",
-  "N",
-  "B",
-  "UP",
-  "C90",
-  "T20",
-  "EM",
-  "PL",
-  "C4",
-  "PT",
-  "TD",
-  "ICN",
-  "RET",
-  "RSE",
-  "SIM",
-  "TID",
-  "PTH",
-  "TCH",
+ignore = [
+  # https://docs.astral.sh/ruff/rules/#pydocstyle-d
+  "ANN101",
+  "ANN401",
+  "D",
+  "ERA001",
   "FIX",
-  "FLY",
-  "YTT",
+  "INP001",
+  "PGH",
+  "PLR0913",
+  "S101",
+  "S301",
+  "T20",
+  "TCH003",
+  "TD",
 ]
-ignore = ["D200", "D104", "E501", "D101", "D100", "D102", "ANN101", "T201", "PLR0913"]
-task-tags = ["TODO", "FIXME", "XXX", "UPDATEME"]  # UPDATEME by modifying or removing this setting after addressing all UPDATEMEs
+select = ["ALL"]
 
+[tool.ruff.lint.per-file-ignores]
+"docs/conf.py" = ["INP001"]
+"test/*" = ["S101"]
 
-[tool.ruff.lint.flake8-pytest-style]
-fixture-parentheses = false
-mark-parentheses = false
-
-[tool.ruff.lint.flake8-tidy-imports]
-ban-relative-imports = "all"
-
-[tool.ruff.lint.pycodestyle]
-max-line-length = 120
-max-doc-length = 120
-
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
-
-[tool.ruff.lint.pylint]
-max-bool-expr = 3
-
-[tool.ruff.lint.isort]
-split-on-trailing-comma = false
-sections.typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
-sections.testing = ["pytest", "tests"]
-section-order = [
-  "future",
-  "typing",
-  "standard-library",
-  "third-party",
-  "first-party",
-  "local-folder",
-  "testing"
-]
+[tool.tomlsort]
+all = true
+in_place = true
+trailing_comma_inline_array = true

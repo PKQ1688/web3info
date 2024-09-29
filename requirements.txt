@@ -1,0 +1,9 @@
+openai
+transformers
+seaborn
+ruff
+python-dotenv
+jinja2
+pygments
+markdownify
+duckduckgo-search

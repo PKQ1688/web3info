@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 
 from dotenv import load_dotenv
@@ -10,7 +12,7 @@ openai_role_conversions = {MessageRole.TOOL_RESPONSE: MessageRole.USER}
 
 
 class OpenAIEngine:
-    def __init__(self, model_name=None, use_azure=False):
+    def __init__(self, model_name: str | None = None, *, use_azure: bool = False) -> None:
         if model_name is not None:
             self.model_name = model_name
         elif use_azure:
@@ -30,12 +32,10 @@ class OpenAIEngine:
                 api_key=os.environ["DEEPSEEK_API_KEY"],
             )
 
-    def __call__(self, messages, stop_sequences=None, grammar=None):
+    def __call__(self, messages: str, stop_sequences: str | None = None, grammar: str | None = None) -> str:
         if stop_sequences is None:
             stop_sequences = []
-        messages = get_clean_message_list(
-            messages, role_conversions=openai_role_conversions
-        )
+        messages = get_clean_message_list(messages, role_conversions=openai_role_conversions)
 
         response = self.client.chat.completions.create(
             model=self.model_name,
