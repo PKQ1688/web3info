@@ -10,24 +10,19 @@ readme = "README.md"
 version = "0.1.0"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-openai = "^1.50.2"
-transformers = "^4.45.1"
-seaborn = "^0.13.2"
-ruff = "^0.6.8"
-python-dotenv = "^1.0.1"
-jinja2 = "^3.1.4"
-pygments = "^2.18.0"
-markdownify = "^0.13.1"
 duckduckgo-search = "^6.2.13"
+jinja2 = "^3.1.4"
+markdownify = "^0.13.1"
+openai = "^1.50.2"
+pygments = "^2.18.0"
+python = "^3.12"
+python-dotenv = "^1.0.1"
+seaborn = "^0.13.2"
+transformers = "^4.45.1"
 
-[tool.pytest.ini_options]
-addopts = "-l -s --durations=0"
-log_cli = true
-log_cli_level = "info"
-log_date_format = "%Y-%m-%d %H:%M:%S"
-log_format = "%(asctime)s %(levelname)s %(message)s"
-minversion = "6.0"
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.6.8"
+toml-sort = "^0.23.1"
 
 [tool.ruff]
 fix = true
