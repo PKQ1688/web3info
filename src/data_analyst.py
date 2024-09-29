@@ -1,11 +1,14 @@
-import os
+import json
+from pathlib import Path
+
 from transformers.agents import ReactCodeAgent
+
 from src.llm_engines import OpenAIEngine
 
-if not os.path.exists("figures"):
-    os.mkdir("figures")
+if Path("output.csv").exists():
+    Path("output.csv").unlink()
 
-llm_engine = OpenAIEngine(model_name="deepseek-chat")
+llm_engine = OpenAIEngine(use_azure=True)
 
 agent = ReactCodeAgent(
     tools=[],
@@ -33,7 +36,7 @@ Spouse = husband, wife (mistresses and fiancés were ignored)
 parch: The dataset defines family relations in this way...
 Parent = mother, father
 Child = daughter, son, stepdaughter, stepson
-Some children traveled only with a nanny, therefore parch=0 for them.
+Some children travelled only with a nanny, therefore parch=0 for them.
 """
 
 agent_prompt = """
@@ -55,14 +58,14 @@ analysis = agent.run(
 )
 print(analysis)
 
-
+analysis_str = json.dumps(analysis, indent=4)
 output = agent.run(
     """You are an expert machine learning engineer.
 Please train a ML model on "titanic/train.csv" to predict the survival for rows of "titanic/test.csv".
 Output the results under './output.csv'.
 Take care to import functions and modules before using them!
 """,
-    additional_notes=additional_notes + "\n" + analysis,
+    additional_notes=additional_notes + "\n" + analysis_str,
 )
 
 print(output)

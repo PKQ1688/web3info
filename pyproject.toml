@@ -19,3 +19,77 @@ pygments = "^2.18.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+# https://github.com/astral-sh/ruff
+# https://docs.astral.sh/ruff/settings
+output-format = "grouped"
+show-fixes = true
+target-version = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 120
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = [  # UPDATEME with additional rules from https://docs.astral.sh/ruff/rules/
+  "F",
+  "E",
+  "W",
+  "I",
+  "N",
+  "B",
+  "UP",
+  "C90",
+  "T20",
+  "EM",
+  "PL",
+  "C4",
+  "PT",
+  "TD",
+  "ICN",
+  "RET",
+  "RSE",
+  "SIM",
+  "TID",
+  "PTH",
+  "TCH",
+  "FIX",
+  "FLY",
+  "YTT",
+]
+ignore = ["D200", "D104", "E501", "D101", "D100", "D102", "ANN101", "T201", "PLR0913"]
+task-tags = ["TODO", "FIXME", "XXX", "UPDATEME"]  # UPDATEME by modifying or removing this setting after addressing all UPDATEMEs
+
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+max-doc-length = 120
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.pylint]
+max-bool-expr = 3
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+sections.typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
+sections.testing = ["pytest", "tests"]
+section-order = [
+  "future",
+  "typing",
+  "standard-library",
+  "third-party",
+  "first-party",
+  "local-folder",
+  "testing"
+]
