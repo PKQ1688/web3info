@@ -24,4 +24,4 @@ manager_agent = ReactCodeAgent(
     additional_authorized_imports=["time", "datetime"],
 )
 
-manager_agent.run("How many years ago was Stripe founded?")
+manager_agent.run("2019年的时候,上海的人均gpd是广州的多少倍?")
