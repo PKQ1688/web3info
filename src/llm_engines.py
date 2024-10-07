@@ -35,10 +35,22 @@ class OpenAIEngine:
                 api_key=os.getenv("GLM_API_KEY"),
             )
 
-    def __call__(self, messages: str, stop_sequences: str | None = None, grammar: str | None = None) -> str:
+    def __call__(
+        self,
+        messages: list[dict[str, str]] | None = None,
+        stop_sequences: str | None = None,
+        grammar: str | None = None,
+        message_str: str | None = None,
+    ) -> str:
         if stop_sequences is None:
             stop_sequences = []
-        messages = get_clean_message_list(messages, role_conversions=openai_role_conversions)
+        if messages is not None:
+            messages = get_clean_message_list(messages, role_conversions=openai_role_conversions)
+        elif message_str is not None:
+            messages = [{"role": "user", "content": message_str}]
+        else:
+            msg = "You must provide either a message string or a list of messages."
+            raise ValueError(msg)
 
         response = self.client.chat.completions.create(
             model=self.model_name,

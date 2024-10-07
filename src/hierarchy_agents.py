@@ -24,4 +24,4 @@ manager_agent = ReactCodeAgent(
     additional_authorized_imports=["time", "datetime"],
 )
 
-manager_agent.run("WenmuZhou的GitHub有多少个项目,找出其中最受欢迎的项目")
+manager_agent.run("今天的github 趋势榜单是什么")

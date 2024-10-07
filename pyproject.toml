@@ -19,6 +19,9 @@ python = "^3.12"
 python-dotenv = "^1.0.1"
 seaborn = "^0.13.2"
 transformers = "^4.45.1"
+trafilatura = "^1.12.2"
+pathvalidate = "^3.2.1"
+serpapi = "^0.1.5"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.6.8"
@@ -30,9 +33,7 @@ line-length = 120
 
 [tool.ruff.lint]
 ignore = [
-  # https://docs.astral.sh/ruff/rules/#pydocstyle-d
-  "ANN101",
-  "ANN401",
+  "ANN",
   "D",
   "ERA001",
   "FIX",
@@ -41,9 +42,11 @@ ignore = [
   "PLR0913",
   "S101",
   "S301",
+  "S133",
   "T20",
   "TCH003",
   "TD",
+  "RUF012"
 ]
 select = ["ALL"]
 
