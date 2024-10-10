@@ -8,7 +8,7 @@ llm_engine = OpenAIEngine(use_azure=False)
 web_agent = ReactJsonAgent(
     tools=[DuckDuckGoSearchTool(), VisitWebpageTool()],
     llm_engine=llm_engine,
-    max_iterations=10,
+    max_iterations=50,
 )
 
 managed_web_agent = ManagedAgent(
@@ -22,6 +22,11 @@ manager_agent = ReactCodeAgent(
     llm_engine=llm_engine,
     managed_agents=[managed_web_agent],
     additional_authorized_imports=["time", "datetime"],
+    max_iterations=50,
 )
 
-manager_agent.run("今天的github 趋势榜单是什么")
+manager_agent.run("""
+21 34 41 51 53 77 83 85 86按顺序将这9个数字插入1个空的3阶b+树.
+这个b+树,怎么删除,才能在删除最少数据的前提下,把高度降低到2啊
+""",
+additional_notes="3阶树,一个节点只能有2个数字")

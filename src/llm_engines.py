@@ -18,8 +18,8 @@ class OpenAIEngine:
         elif use_azure:
             self.model_name = "4o0806"
         else:
-            # self.model_name = "deepseek-chat"
-            self.model_name = "glm-4-plus"
+            self.model_name = "deepseek-chat"
+            # self.model_name = "glm-4-plus"
 
         if use_azure:
             self.client = AzureOpenAI(
@@ -29,10 +29,10 @@ class OpenAIEngine:
             )
         else:
             self.client = OpenAI(
-                # base_url=os.environ["DEEPSEEK_BASE_URL"],
-                # api_key=os.environ["DEEPSEEK_API_KEY"],
-                base_url=os.getenv("GLM_BASE_URL"),
-                api_key=os.getenv("GLM_API_KEY"),
+                base_url=os.environ["DEEPSEEK_BASE_URL"],
+                api_key=os.environ["DEEPSEEK_API_KEY"],
+                # base_url=os.getenv("GLM_BASE_URL"),
+                # api_key=os.getenv("GLM_API_KEY"),
             )
 
     def __call__(
