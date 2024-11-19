@@ -10,18 +10,13 @@ readme = "README.md"
 version = "0.1.0"
 
 [tool.poetry.dependencies]
-duckduckgo-search = "^6.2.13"
-jinja2 = "^3.1.4"
-markdownify = "^0.13.1"
-openai = "^1.50.2"
-pathvalidate = "^3.2.1"
-pygments = "^2.18.0"
 python = "^3.12"
+jinja2 = "^3.1.4"
+openai = "^1.54.4"
 python-dotenv = "^1.0.1"
-seaborn = "^0.13.2"
-serpapi = "^0.1.5"
-trafilatura = "^1.12.2"
-transformers = {extras = ["agent"], version = "^4.45.2"}
+phidata = "^2.5.32"
+duckduckgo-search = "^6.3.5"
+dspy = "^2.5.31"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.6.8"
@@ -33,7 +28,19 @@ line-length = 120
 
 [tool.ruff.lint]
 ignore = [
-	"ANN", "D", "ERA001", "FIX", "INP001", "PGH", "PLR0913", "RUF012", "S", "T20", "TCH003", "TD"
+  "ANN",
+  "D",
+  "ERA001",
+  "FIX",
+  "INP001",
+  "PGH",
+  "PLR0913",
+  "RUF001",
+  "RUF012",
+  "S",
+  "T20",
+  "TCH003",
+  "TD",
 ]
 select = ["ALL"]
 

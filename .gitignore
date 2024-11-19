@@ -1,7 +1,5 @@
-/target
-.shuttle-storage
-Secrets*.toml
-Cargo.lock
 .env
 poetry.lock
 .ruff_cache
+
+**/__pycache__/

@@ -1,62 +1,38 @@
-from __future__ import annotations
-
 import os
 
+import dspy
 from dotenv import load_dotenv
-from openai import AzureOpenAI, OpenAI
-from transformers.agents.llm_engine import MessageRole, get_clean_message_list
+from phi.model.azure import AzureOpenAIChat
+from phi.model.openai.like import OpenAILike
 
-load_dotenv()
+load_dotenv(override=True)
 
-openai_role_conversions = {MessageRole.TOOL_RESPONSE: MessageRole.USER}
+llm_model_opeailike = OpenAILike(
+    id="deepseek-chat",
+    base_url=os.getenv("DEEPSEEK_BASE_URL"),
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    # id="glm-4-flash",
+    # base_url=os.getenv("GLM_BASE_URL"),
+    # api_key=os.getenv("GLM_API_KEY"),
+)
 
+azure_model_azure = AzureOpenAIChat(
+    id="gpt4o-mini",
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_version=os.getenv("AZURE_API_VERSION"),
+)
 
-class OpenAIEngine:
-    def __init__(self, model_name: str | None = None, *, use_azure: bool = False) -> None:
-        if model_name is not None:
-            self.model_name = model_name
-        elif use_azure:
-            self.model_name = "4o0806"
-        else:
-            self.model_name = "deepseek-chat"
-            # self.model_name = "glm-4-plus"
+ds_llm = dspy.LM(
+    model="azure/gpt4o-mini",
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_base=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_version=os.getenv("AZURE_API_VERSION"),
+)
 
-        if use_azure:
-            self.client = AzureOpenAI(
-                api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-                api_version=os.getenv("AZURE_API_VERSION"),
-                azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),  # type: ignore
-            )
-        else:
-            self.client = OpenAI(
-                base_url=os.environ["DEEPSEEK_BASE_URL"],
-                api_key=os.environ["DEEPSEEK_API_KEY"],
-                # base_url=os.getenv("GLM_BASE_URL"),
-                # api_key=os.getenv("GLM_API_KEY"),
-            )
+if __name__ == "__main__":
+    from phi.agent import Agent
 
-    def __call__(
-        self,
-        messages: list[dict[str, str]] | None = None,
-        stop_sequences: str | None = None,
-        grammar: str | None = None,
-        message_str: str | None = None,
-    ) -> str:
-        if stop_sequences is None:
-            stop_sequences = []
-        if messages is not None:
-            messages = get_clean_message_list(messages, role_conversions=openai_role_conversions)
-        elif message_str is not None:
-            messages = [{"role": "user", "content": message_str}]
-        else:
-            msg = "You must provide either a message string or a list of messages."
-            raise ValueError(msg)
+    agent = Agent(model=azure_model_azure, markdown=True)
 
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            stop=stop_sequences,
-            temperature=0.5,
-            response_format=grammar,
-        )
-        return response.choices[0].message.content
+    agent.print_response("how are you?", stream=True)
